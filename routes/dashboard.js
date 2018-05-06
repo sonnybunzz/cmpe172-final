@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
   res.render('dashboard', {
     title: 'Dashboard',
     descriptionList,
-    userinfo,
+    userinfo: req.userinfo
   })
 })
 

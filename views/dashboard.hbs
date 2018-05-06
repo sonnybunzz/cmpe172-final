@@ -1,3 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <header>
+      <h1>{{title}}</h1>
+      {{#if userinfo}}
+        <div>
+          Signed in as {{userinfo.name}}
+        </div>
+      {{/if}}
+      {{#if userinfo}}
+        <a href="/logout">Sign out</a>
+      {{else}}
+        <a href="/login">Sign in</a>
+      {{/if}}
+    </header>
+    <main>
 <h1>{{userinfo.given_name}}'s Dashboard</h1>
 
 <p>Here's where you would put something useful. How about your profile info?</p>
@@ -7,3 +29,6 @@
     <dd>{{this.details}}</dd>
   {{/each}}
 </dl>
+    </main>
+  </body>
+</html>

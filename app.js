@@ -5,11 +5,29 @@ const logger = require('morgan');
 const exphbs = require('express-handlebars');
 const session = require('express-session')
 const { ExpressOIDC } = require('@okta/oidc-middleware')
+const mysql = require('mysql');
 
 const indexRouter = require('./routes/index');
 const dashboardRouter = require('./routes/dashboard')
 
 const app = express();
+
+//mysql setup
+const connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '',
+  database : 'employees'
+});
+
+connection.connect(function(err) {
+  if (err) {
+    console.error('error connecting: ' + err.stack);
+    return;
+  }
+
+  console.log('connected as id ' + connection.threadId);
+});
 
 const oidc = new ExpressOIDC({
   issuer: `${process.env.ORG_URL}/oauth2/default`,
@@ -18,6 +36,7 @@ const oidc = new ExpressOIDC({
   redirect_uri: `${process.env.HOST_URL}/authorization-code/callback`,
   scope: 'openid profile',
 })
+
 // view engine setup
 app.engine('.hbs', exphbs({extname: '.hbs'}));
 app.set('views', path.join(__dirname, 'views'));
@@ -57,5 +76,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = { app, oidc };

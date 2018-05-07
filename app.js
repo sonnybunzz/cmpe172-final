@@ -1,19 +1,21 @@
 const express = require('express');
 const path = require('path');
+const routes = require('./routes');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const exphbs = require('express-handlebars');
-const session = require('express-session')
-const { ExpressOIDC } = require('@okta/oidc-middleware')
-const mysql = require('mysql');
+const session = require('express-session');
+const { ExpressOIDC } = require('@okta/oidc-middleware');
+//const mysql = require('mysql');
 
 const indexRouter = require('./routes/index');
-const dashboardRouter = require('./routes/dashboard')
+const dashboardRouter = require('./routes/dashboard');
+const employee = require('./routes/employee');
 
 const app = express();
 
 //mysql setup
-const connection = mysql.createConnection({
+/*const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '',
@@ -29,6 +31,13 @@ connection.connect(function(err) {
   console.log('connected as id ' + connection.threadId);
 });
 
+connection.query('SELECT emp_no,first_name,last_name,hire_date FROM employees', (err, rows) =>
+{
+	if(err) throw err;
+	console.log('Data received from Db:\n');
+	console.log(rows);
+})
+*/
 const oidc = new ExpressOIDC({
   issuer: `${process.env.ORG_URL}/oauth2/default`,
   client_id: process.env.CLIENT_ID,
@@ -60,6 +69,7 @@ app.get('/logout', (req, res) => {
 	req.logout()
 	res.redirect('/')
 })
+app.use('/employee', employee);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -5,6 +5,7 @@ router.get('/', function (req, res) {
   res.render('index', {
     title: 'Simple Node Authentication',
     userinfo: req.userinfo,
+    //layout: 'layout'
   })
 })
 

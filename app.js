@@ -6,13 +6,30 @@ const logger = require('morgan');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const { ExpressOIDC } = require('@okta/oidc-middleware');
+const bodyParser = require('body-parser');
+
+const methodOverride = require('method-override');
 //const mysql = require('mysql');
+const flash = require('express-flash');
 
 const indexRouter = require('./routes/index');
 const dashboardRouter = require('./routes/dashboard');
 const employee = require('./routes/employee');
 
 const app = express();
+
+var expressValidator = ('express-validator');
+//app.use(expressValidator())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+
+app.use(methodOverride(function (req,res){
+	if(req.body && typeof req.body == 'object' && '_method' in req.body) {
+		var method = req.body._method
+		delete req.body._method
+		return method
+	}
+}))
 
 //mysql setup
 /*const connection = mysql.createConnection({
@@ -47,7 +64,13 @@ const oidc = new ExpressOIDC({
 })
 
 // view engine setup
+var hbs = exphbs.create({
+	extname: 'hbs',
+	layoutsDir: './views/layout',
+	defaultLayout: 'main'
+})
 app.engine('.hbs', exphbs({extname: '.hbs'}));
+app.set('view options', {layout: 'layout'});
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(session({
@@ -56,6 +79,18 @@ app.use(session({
 	saveUninitialized: false,
 }));
 app.use(oidc.router);
+
+//flash module
+
+ 
+app.use(cookieParser('keyboard cat'))
+app.use(session({ 
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 60000 }
+}))
+app.use(flash()) 
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -69,7 +104,7 @@ app.get('/logout', (req, res) => {
 	req.logout()
 	res.redirect('/')
 })
-app.use('/employee', employee);
+app.use('/employee', oidc.ensureAuthenticated(), employee);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,36 +1,64 @@
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <header>
-      <h1>{{title}}</h1>
-      {{#if userinfo}}
-        <div>
-          Signed in as {{userinfo.name}}
-        </div>
-      {{/if}}
-      {{#if userinfo}}
-        <a href="/logout">Sign out</a>
-      {{else}}
-        <a href="/login">Sign in</a>
-      {{/if}}
-    </header>
-    <main>
-<h1>{{userinfo.given_name}}'s Dashboard</h1>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Early Birds</title>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="script.js"></script>
+</head>
+<body>
+<div>
+<div>
 
-<p>Here's where you would put something useful. How about your profile info?</p>
-<a href="/employee">Employee Database</a>
-<a href="https://dev-380246.oktapreview.com/home/facebook/0oaex0yscpMBYpWXn0h7/149">fb</a>
-<dl>
-  {{#each descriptionList}}
-    <dt>{{this.term}}</dt>
-    <dd>{{this.details}}</dd>
-  {{/each}}
-</dl>
-    </main>
-  </body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Early Birds</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/employee">Employee Database</a></li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          {{#if userinfo}}
+          Signed in as {{userinfo.name}} <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+      <li><a href="/logout"> Signout</a></li>
+      {{else}}
+      <li><a href="/login"> Login</a></li>
+      {{/if}}
+
+
+</div>
+</div>
+<br/>
+      <div class = "container">
+        <div class = "row">
+          <div class = "col-md-12">
+<div class="jumbotron"> <p>
+<center>
+<h1>{{userinfo.given_name}}'s Social Portal</h1>
+
+
+<a href="https://dev-380246.oktapreview.com/home/sjsudev380246_mysjsu_1/0oaexg9s8g2EmjDnY0h7/alnexgkk71KKWXM0s0h7"><img border="0" alt="MySJSU" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXeZc4Na2H44usuBYlRP59hWKsXyApuXDayp7qvvrTWiLcusLXfg" width="350" height="125"></a>
+<a href="https://dev-380246.oktapreview.com/home/linkedin/0oaex1pm6prOb4gIp0h7/47"><img border="0" alt="LinkedIn" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/LinkedIn_Logo.svg/2000px-LinkedIn_Logo.svg.png" width = "350" height = "125"></a>
+<a href="https://dev-380246.oktapreview.com/home/facebook/0oaex0yscpMBYpWXn0h7/149"><img border="0" alt="Facebook" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Facebook_New_Logo_%282015%29.svg/2000px-Facebook_New_Logo_%282015%29.svg.png" width = "350" height = "125"></a>
+<a href="https://dev-380246.oktapreview.com/home/github/0oaex5lne0YaYyRTb0h7/114"><img border="0" alt="GitHub" src="http://www.prodapt.com/wp-content/uploads/github.png" width="350" height ="125"></a>
+</center>
+</p></div>
+</div>
+</div>
+</div>
+</div>
+</body>
 </html>

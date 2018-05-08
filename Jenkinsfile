@@ -6,15 +6,14 @@ pipeline {
         bat 'yarn' 
       }
     }
-  }
-  post {
-    always {
-      steps {
+    stage('Stop'){
+      steps{
         bat 'npm stop'
-        bat 'npm start'
       }
-      failure {
-        bat 'echo Stopped!'
+    }
+    stage('Start'){
+      steps{
+        bat 'npm start'
       }
     }
   }

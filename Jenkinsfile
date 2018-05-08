@@ -3,12 +3,12 @@ pipeline {
   stages {
     stage('myStage'){
       steps {
-        bat 'dir' 
+        bat 'yarn' 
       }
     }
     stage('Build') {
       steps { 
-        bat 'dir' 
+        bat 'yarn Start' 
       }
     }
   }

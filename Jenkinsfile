@@ -1,19 +1,20 @@
 pipeline {
   agent any
   stages {
-    stage('kill'){
-      steps{
-        bat 'taskkill /im node.exe'
-      }
-    }  
-    stage('myStage'){
-      steps {
+    stage('Build') {
+      steps { 
         bat 'yarn' 
       }
     }
-    stage('Build') {
-      steps { 
-        bat 'yarn start' 
+  }
+  post {
+    always {
+      steps {
+        bat 'npm stop'
+        bat 'npm start'
+      }
+      failure {
+        bat 'echo Stopped!'
       }
     }
   }

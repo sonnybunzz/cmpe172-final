@@ -5,8 +5,6 @@
   "scripts": {
     "start": "forever start app.js",
     "stop": "forever stopall"
-    //"start": "node ./bin/www",
-    //"test": "eslint . ./bin/www"
   },
   "dependencies": {
     "@okta/oidc-middleware": "^0.1.2",

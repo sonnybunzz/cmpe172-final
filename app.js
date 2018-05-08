@@ -7,7 +7,7 @@ const exphbs = require('express-handlebars');
 const session = require('express-session');
 const { ExpressOIDC } = require('@okta/oidc-middleware');
 const bodyParser = require('body-parser');
-
+var expressValidator = ('express-validator');
 const methodOverride = require('method-override');
 //const mysql = require('mysql');
 const flash = require('express-flash');
@@ -16,9 +16,10 @@ const indexRouter = require('./routes/index');
 const dashboardRouter = require('./routes/dashboard');
 const employee = require('./routes/employee');
 
+
 const app = express();
 
-var expressValidator = ('express-validator');
+
 //app.use(expressValidator())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -67,7 +68,7 @@ const oidc = new ExpressOIDC({
 var hbs = exphbs.create({
 	extname: 'hbs',
 	layoutsDir: './views/layout',
-	defaultLayout: 'main'
+	defaultLayout: 'layout'
 })
 app.engine('.hbs', exphbs({extname: '.hbs'}));
 app.set('view options', {layout: 'layout'});
@@ -96,7 +97,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname + '/../public')));
 
 app.use('/', indexRouter);
 app.use('/dashboard', oidc.ensureAuthenticated(), dashboardRouter);
@@ -105,6 +106,7 @@ app.get('/logout', (req, res) => {
 	res.redirect('/')
 })
 app.use('/employee', oidc.ensureAuthenticated(), employee);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

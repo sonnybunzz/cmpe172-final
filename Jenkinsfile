@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps { 
-        bat 'cd C:\Users\bryan\Documents\Projects\cmpe172-final'
+        bat 'cd /d C:\Users\bryan\Documents\Projects\cmpe172-final'
         bat 'yarn' 
       }
     }

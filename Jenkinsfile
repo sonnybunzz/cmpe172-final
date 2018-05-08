@@ -6,11 +6,6 @@ pipeline {
         bat 'yarn' 
       }
     }
-    stage('Stop'){
-      steps{
-        bat 'npm stop'
-      }
-    }
     stage('Start'){
       steps{
         bat 'npm start'
